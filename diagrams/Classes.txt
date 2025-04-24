@@ -2,8 +2,6 @@
 class User {
   {method} + changeProfile(): Редактировать информацию в профиле
   {method} + addGame(): Добавление информации об игре в каталог
-  {method} + editGame(): Редактирование информации об игре
-  {method} + deleteGame(): Удаление информации об игре
   {method} + addComments(): Добавление комментариев к видеоиграм
   {method} + changeComments(): Изменение комментариев к видеоиграм
   {method} + deleteComments(): Удаление комментариев к видеоиграм
@@ -27,7 +25,6 @@ class Admin {
   {method} + sendWarningUser(): Выдать предупреждение пользователю
   {method} + banUser(): Забанить пользователя
   {method} + deleteUser(): Удалить пользователя
-  {method} + publishNews(): Публикация новостей
   {method} + addGame(): Добавление информации об игре в каталог
   {method} + editGame(): Редактирование информации об игре
   {method} + deleteGame(): Удаление информации об игре
