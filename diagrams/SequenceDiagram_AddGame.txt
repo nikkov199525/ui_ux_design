@@ -1,0 +1,10 @@
+@startuml
+actor Пользователь as user
+participant Веб-приложение as webapp
+participant База_игр as database
+user -> webapp: Добавить игру
+webapp -> database: Сохранить игру
+database --> webapp: Успешное сохранение
+webapp --> user: Игра добавлена
+@enduml
+

@@ -1,0 +1,54 @@
+@startuml
+class User {
+  {method} + changeProfile(): Редактировать информацию в профиле
+  {method} + addGame(): Добавление информации об игре в каталог
+  {method} + editGame(): Редактирование информации об игре
+  {method} + deleteGame(): Удаление информации об игре
+  {method} + addComments(): Добавление комментариев к видеоиграм
+  {method} + changeComments(): Изменение комментариев к видеоиграм
+  {method} + deleteComments(): Удаление комментариев к видеоиграм
+}
+
+class Game {
+  {field} title: Название игры
+  {field} genre: жанр
+  {field} releaseDate: дата выхода
+  {field} developer: разработчик
+  {field} link: ссылка на игру в магазине steam или gog
+  {field} accessibilityInfo: вся информация о доступности
+}
+
+class Review {
+  {field} comments: комментарии пользователей
+  {field} date: дата публикации
+}
+
+class Admin {
+  {method} + sendWarningUser(): Выдать предупреждение пользователю
+  {method} + banUser(): Забанить пользователя
+  {method} + deleteUser(): Удалить пользователя
+  {method} + publishNews(): Публикация новостей
+  {method} + addGame(): Добавление информации об игре в каталог
+  {method} + editGame(): Редактирование информации об игре
+  {method} + deleteGame(): Удаление информации об игре
+  {method} + verifyGameInfo(): Проверка информации об игре, которую добавил пользователь (модерация)
+  {method} + addComments(): Добавление комментариев к видеоиграм
+  {method} + deleteComments(): Удаление комментариев к видеоиграм
+}
+
+class Auth {
+  {field} email: e-mail
+  {field} user_name: имя пользователя
+  {field} password: пароль
+  {method} + register(): Зарегистрироваться
+  {method} + login(): Войти в систему
+}
+
+User "1" --> "1" Auth
+User "0..*" *-- "0..*" Game
+User "1..*" *-- "0..*" Review
+Game "1" *-- "1" Review
+Admin --|> User
+Admin "1" --* "0..*" Game
+Admin "1" --* "0..*" Review
+@enduml
