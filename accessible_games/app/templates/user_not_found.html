@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block title %}Пользователь не найден{% endblock %}
+{% block content %}
+<p>Пользователя с почтой {{ email }} не существует.</p>
+<a href="{{ url_for('main.forgot_password') }}">Попробуйте еще раз</a>
+{% endblock %}

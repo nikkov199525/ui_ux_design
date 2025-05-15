@@ -1,0 +1,25 @@
+body {
+    font-family: sans-serif;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+header {
+    background-color: #333;
+    color: white;
+    padding: 15px;
+}
+header a {
+    color: white;
+    margin-right: 15px;
+    text-decoration: none;
+}
+main {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+form input, form textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+}

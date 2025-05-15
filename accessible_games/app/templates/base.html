@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}База видеоигр{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+    <header>
+        <h1><a href="{{ url_for('main.index') }}">База доступных видеоигр</a></h1>
+        <nav>
+            {% if session.get('user_id') %}
+                <a href="{{ url_for('main.logout') }}">Выйти</a>
+                <a href="{{ url_for('main.add_game') }}">Добавить игру</a>
+            {% else %}
+                <a href="{{ url_for('main.login') }}">Вход</a>
+                <a href="{{ url_for('main.register') }}">Регистрация</a>
+            {% endif %}
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

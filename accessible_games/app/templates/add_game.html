@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Добавить игру{% endblock %}
+{% block content %}
+<h2>Добавить игру</h2>
+<form method="POST">
+    <label>Название:</label><br/>
+    <input type="text" name="title" required /><br/>
+    <label>Жанр:</label><br/>
+    <input type="text" name="genre" required /><br/>
+    <label>Дата выхода:</label><br/>
+    <input type="text" name="release_date" /><br/>
+    <label>Тип доступности:</label><br/>
+    <input type="text" name="accessibility_type" required /><br/>
+    <label>Проблемы:</label><br/>
+    <textarea name="issues"></textarea><br/>
+    <label>Решения:</label><br/>
+    <textarea name="solutions"></textarea><br/>
+    <button type="submit">Добавить</button>
+</form>
+{% endblock %}
+
