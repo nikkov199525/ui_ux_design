@@ -2,19 +2,61 @@
 {% block title %}Редактировать игру{% endblock %}
 {% block content %}
 <h2>Редактировать игру</h2>
-<form method="POST">
-    <label>Название:</label><br/>
-    <input type="text" name="title" value="{{ game.title }}" required /><br/>
-    <label>Жанр:</label><br/>
-    <input type="text" name="genre" value="{{ game.genre }}" required /><br/>
-    <label>Дата выхода:</label><br/>
-    <input type="text" name="release_date" value="{{ game.release_date }}" /><br/>
-    <label>Тип доступности:</label><br/>
-    <input type="text" name="accessibility_type" value="{{ game.accessibility_type }}" required /><br/>
-    <label>Проблемы:</label><br/>
-    <textarea name="issues">{{ game.issues }}</textarea><br/>
-    <label>Решения:</label><br/>
-    <textarea name="solutions">{{ game.solutions }}</textarea><br/>
+<form method="POST" aria-label="Форма редактирования игры">
+    <div>
+        <label for="title">Название:</label><br/>
+        <input type="text" id="title" name="title" value="{{ game.title }}" required aria-required="true" aria-label="Название игры" /><br/>
+    </div>
+    <div>
+        <label for="genre">Жанр:</label><br/>
+        <input type="text" id="genre" name="genre" value="{{ game.genre }}" required aria-required="true" aria-label="Жанр игры" /><br/>
+    </div>
+    <div>
+        <label for="release_date">Дата выхода:</label><br/>
+        <input type="date" id="release_date" name="release_date"
+            value="{{ game.release_date.strftime('%Y-%m-%d') if game.release_date else '' }}" aria-label="Дата выхода игры" /><br/>
+    </div>
+    <div>
+        <label for="store_link">Ссылка на магазин:</label><br/>
+        <input type="url" id="store_link" name="store_link" value="{{ game.store_link }}" required aria-required="true" aria-label="Ссылка на магазин" /><br/>
+    </div>
+    <div>
+        <fieldset>
+            <legend id="vision-accessibility-label">Доступность для людей с проблемами зрения</legend>
+            <input type="radio" id="vision_none" name="access_vision" value="none"
+                aria-labelledby="vision-accessibility-label vision_none_label"
+                {% if game.access_vision == "none" %}checked{% endif %}>
+            <label id="vision_none_label" for="vision_none">Нет</label>
+            <input type="radio" id="vision_partial" name="access_vision" value="partial"
+                aria-labelledby="vision-accessibility-label vision_partial_label"
+                {% if game.access_vision == "partial" %}checked{% endif %}>
+            <label id="vision_partial_label" for="vision_partial">Частичная</label>
+            <input type="radio" id="vision_full" name="access_vision" value="full"
+                aria-labelledby="vision-accessibility-label vision_full_label"
+                {% if game.access_vision == "full" %}checked{% endif %}>
+            <label id="vision_full_label" for="vision_full">Полная</label>
+        </fieldset>
+        <div id="vision_detail_container" style="display:{% if game.access_vision == 'partial' %}block{% else %}none{% endif %}; margin-top:0.5em;">
+            <label for="vision_detail">Поясните, что именно доступно или недоступно для людей с нарушениями зрения:</label>
+            <textarea id="vision_detail" name="vision_detail" aria-label="Детали доступности по зрению">{{ game.vision_detail }}</textarea>
+        </div>
+    </div>
+    <div>
+        <label for="issues">Проблемы:</label><br/>
+        <textarea id="issues" name="issues" aria-label="Проблемы">{{ game.issues }}</textarea><br/>
+    </div>
+    <div>
+        <label for="solutions">Решения:</label><br/>
+        <textarea id="solutions" name="solutions" aria-label="Решения">{{ game.solutions }}</textarea><br/>
+    </div>
     <button type="submit">Сохранить</button>
 </form>
+<script>
+document.querySelectorAll('input[name="access_vision"]').forEach(function(radio) {
+    radio.addEventListener('change', function() {
+        document.getElementById('vision_detail_container').style.display =
+            (this.value === "partial") ? 'block' : 'none';
+    });
+});
+</script>
 {% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Игры{% endblock %}
+{% block content %}
+<h2>Игры</h2>
+
+<form method="post" aria-label="Поиск" style="margin-bottom: 1em;">
+    <label for="search" style="display: none;">Поиск</label>
+    <input type="text" id="search" name="search" value="{{ search or '' }}" aria-label="Введите название игры для поиска" placeholder="Поиск" />
+    <button type="submit">Поиск</button>
+</form>
+
+<ul>
+    {% for game in games %}
+        <li>
+            <a href="{{ url_for('main.game_detail', game_id=game.id) }}">{{ game.title }}</a>
+        </li>
+    {% else %}
+        <li>Ничего не найдено.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

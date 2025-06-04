@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
 {% block title %}Главная{% endblock %}
 {% block content %}
-<h2>Список игр</h2>
-<ul>
-    {% for game in games %}
-    <li>
-        <a href="{{ url_for('main.game_detail', game_id=game.id) }}">{{ game.title }}</a>
-        (Жанр: {{ game.genre }})
-    </li>
-    {% else %}
-    <li>Игр пока нет.</li>
-    {% endfor %}
-</ul>
+<h2>Добро пожаловать в Базу доступных видеоигр!</h2>
+<p>
+    Этот сайт собирает информацию о видеоиграх, доступных для людей с нарушениями зрения.
+</p>
+<nav style="margin: 1.5em 0;">
+    <a href="{{ url_for('main.games') }}">Перейти к каталогу игр</a>
+    {% if not session.get('user_id') %}
+        | <a href="{{ url_for('main.login') }}">Вход</a>
+        | <a href="{{ url_for('main.register') }}">Регистрация</a>
+    {% endif %}
+</nav>
+
 {% endblock %}

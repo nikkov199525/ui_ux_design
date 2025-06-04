@@ -1,13 +1,13 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session
 from werkzeug.security import generate_password_hash, check_password_hash
 from .models import db, User, Game
+from datetime import datetime
 
 main = Blueprint('main', __name__)
 
 @main.route('/')
 def index():
-    games = Game.query.all()
-    return render_template('index.html', games=games)
+    return render_template('index.html')
 
 @main.route('/login', methods=['GET', 'POST'])
 def login():
@@ -62,13 +62,22 @@ def add_game():
     if 'user_id' not in session:
         return redirect(url_for('main.login'))
     if request.method == 'POST':
+        # Дата (input type="date") приходит как 'YYYY-MM-DD'
+        date_str = request.form.get('release_date', '')
+        release_date = datetime.strptime(date_str, '%Y-%m-%d').date() if date_str else None
+
+        access_vision = request.form.get('access_vision', 'none')
+        vision_detail = request.form.get('vision_detail', '') if access_vision == 'partial' else None
+
         game = Game(
             title=request.form['title'],
             genre=request.form['genre'],
-            release_date=request.form['release_date'],
-            accessibility_type=request.form['accessibility_type'],
-            issues=request.form['issues'],
-            solutions=request.form['solutions'],
+            release_date=release_date,
+            store_link=request.form['store_link'],
+            access_vision=access_vision,
+            vision_detail=vision_detail,
+            issues=request.form.get('issues', ''),
+            solutions=request.form.get('solutions', ''),
             added_by=session['user_id']
         )
         db.session.add(game)
@@ -84,10 +93,14 @@ def edit_game(game_id):
     if request.method == 'POST':
         game.title = request.form['title']
         game.genre = request.form['genre']
-        game.release_date = request.form['release_date']
-        game.accessibility_type = request.form['accessibility_type']
-        game.issues = request.form['issues']
-        game.solutions = request.form['solutions']
+        # Дата (input type="date") приходит как 'YYYY-MM-DD'
+        date_str = request.form.get('release_date', '')
+        game.release_date = datetime.strptime(date_str, '%Y-%m-%d').date() if date_str else None
+        game.store_link = request.form['store_link']
+        game.access_vision = request.form.get('access_vision', 'none')
+        game.vision_detail = request.form.get('vision_detail', '') if game.access_vision == 'partial' else None
+        game.issues = request.form.get('issues', '')
+        game.solutions = request.form.get('solutions', '')
         db.session.commit()
         return redirect(url_for('main.game_detail', game_id=game.id))
     return render_template('edit_game.html', game=game)
@@ -99,3 +112,16 @@ def delete_game(game_id):
         db.session.delete(game)
         db.session.commit()
     return redirect(url_for('main.index'))
+@main.route('/games', methods=['GET', 'POST'])
+def games():
+    query = ''
+    games = []
+    if request.method == 'POST':
+        query = request.form.get('search', '').strip()
+        if query:
+            games = Game.query.filter(Game.title.ilike(f'%{query}%')).all()
+        else:
+            games = Game.query.all()
+    else:
+        games = Game.query.all()
+    return render_template('games.html', games=games, search=query)

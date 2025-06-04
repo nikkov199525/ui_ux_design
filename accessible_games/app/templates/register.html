@@ -2,19 +2,22 @@
 {% block title %}Регистрация{% endblock %}
 {% block content %}
 <h2>Регистрация</h2>
-<form method="POST">
-    <label aria-label="Адрес электронной почты">Адрес электронной почты:</label><br/>
-    <input type="email" name="email" required aria-labelledby="email-label" /><br/>
-
-    <label aria-label="Имя пользователя">Имя пользователя:</label><br/>
-    <input type="text" name="username" required aria-labelledby="username-label" /><br/>
-
-    <label aria-label="Пароль">Пароль:</label><br/>
-    <input type="password" name="password" required aria-labelledby="password-label" /><br/>
-
+<form method="POST" aria-label="Форма регистрации">
+    <div>
+        <label for="email" id="email-label">Адрес электронной почты:</label><br/>
+        <input type="email" id="email" name="email" required aria-required="true" aria-label="Адрес электронной почты" autocomplete="email" /><br/>
+    </div>
+    <div>
+        <label for="username" id="username-label">Имя пользователя:</label><br/>
+        <input type="text" id="username" name="username" required aria-required="true" aria-label="Имя пользователя" autocomplete="username" /><br/>
+    </div>
+    <div>
+        <label for="password" id="password-label">Пароль:</label><br/>
+        <input type="password" id="password" name="password" required aria-required="true" aria-label="Пароль" autocomplete="new-password" /><br/>
+    </div>
     <button type="submit">Зарегистрироваться</button>
 </form>
 {% if error %}
-<p style="color:red;">{{ error }}</p>
+<p role="alert" style="color:red;">{{ error }}</p>
 {% endif %}
 {% endblock %}

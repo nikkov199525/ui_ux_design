@@ -2,15 +2,19 @@
 {% block title %}Вход{% endblock %}
 {% block content %}
 <h2>Вход</h2>
-<form method="POST">
-    <label>Имя пользователя:</label><br/>
-    <input type="text" name="username" required /><br/>
-    <label>Пароль:</label><br/>
-    <input type="password" name="password" required /><br/>
+<form method="POST" aria-label="Вход">
+    <div>
+        <label for="username">Имя пользователя:</label><br/>
+        <input type="text" id="username" name="username" required aria-required="true" aria-label="Имя пользователя" autocomplete="username" /><br/>
+    </div>
+    <div>
+        <label for="password">Пароль:</label><br/>
+        <input type="password" id="password" name="password" required aria-required="true" aria-label="Пароль" autocomplete="current-password" /><br/>
+    </div>
     <button type="submit">Войти</button>
 </form>
 {% if error %}
-<p style="color:red;">{{ error }}</p>
+<p role="alert" style="color:red;">{{ error }}</p>
 {% endif %}
 <p><a href="{{ url_for('main.forgot_password') }}">Забыли пароль?</a></p>
 {% endblock %}
