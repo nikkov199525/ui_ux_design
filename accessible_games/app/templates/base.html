@@ -10,18 +10,21 @@
         <h1>
             <a href="{{ url_for('main.index') }}">База доступных видеоигр</a>
         </h1>
-        <nav>
-            <a href="{{ url_for('main.games') }}">Игры</a>
-            {% if session.get('user_id') %}
-                <a href="{{ url_for('main.logout') }}">Выйти</a>
-                <a href="{{ url_for('main.add_game') }}">Добавить игру</a>
-            {% else %}
-                <a href="{{ url_for('main.login') }}">Вход</a>
-                <a href="{{ url_for('main.register') }}">Регистрация</a>
-            {% endif %}
+        <nav aria-label="Основная навигация">
+            <ul style="display: flex; gap: 1em; list-style: none; padding: 0; margin: 0;">
+                <li><a href="{{ url_for('main.games') }}">Игры</a></li>
+                {% if session.get('user_id') %}
+                    <li><a href="{{ url_for('main.logout') }}">Выйти</a></li>
+                    <li><a href="{{ url_for('main.add_game') }}">Добавить игру</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('main.login') }}">Вход</a></li>
+                    <li><a href="{{ url_for('main.register') }}">Регистрация</a></li>
+                {% endif %}
+            </ul>
         </nav>
     </header>
     <section style="background: #f9f9f9; padding: 0.7em 1.5em; margin-bottom: 1em; font-size: 1.05em;">
+        <strong>База доступных видеоигр</strong> — это каталог игр, которые можно пройти людям с полной или частичной потерей зрения. Здесь собрана вся информация об играх, которые можно пройти даже людям с полной потерей зрения, информация о тех играх, которые доступны частично, и информация о полностью недоступных играх.Мы собираем информацию о возможностях и проблемах доступности, чтобы вы могли найти подходящую игру и узнать о её нюансах до оформления покупки в магазине!
     </section>
     <main>
         {% block content %}{% endblock %}
