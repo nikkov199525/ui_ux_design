@@ -14,12 +14,12 @@
 1. Склонируйте репозиторий проекта:
    ```bash
    git clone https://github.com/nikkov199525/ui_ux_design.git
-````
+```
 
 2. Перейдите в папку с проектом:
    ```bash
    cd ui_ux_design/accessible_games
-````
+```
 
 3. Соберите и запустите контейнеры командой:
    ```bash
